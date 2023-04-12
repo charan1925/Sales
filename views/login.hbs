@@ -1,0 +1,68 @@
+<form class="container" action="/api/auth/login" method="post">
+  <label for="username">Username:</label>
+  <input type="text" id="username" name="username" required>
+  <label for="password">Password:</label>
+  <input type="password" id="password" name="password" required>
+  <button type="submit">
+    <h4>Login</h4>
+  </button>
+</form>
+<form action="/register" method="get">
+
+  <button type="submit">Or Register</button>
+</form>
+<style>
+  /* Set styles for form labels */
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+
+  label {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  input[type="text"],
+  input[type="password"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 300px;
+    margin-bottom: 10px;
+  }
+
+  button[type="submit"] {
+    background-color: #0b72d9;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #24aadb;
+  }
+
+  .container {
+    background-color: rgb(120, 206, 252);
+    width: 30%;
+    padding: 10px;
+    border: 2px solid black;
+  }
+
+  body {
+    background-color:#0cbaf9;
+  }
+
+  form:nth-of-type(2) button[type="submit"] {
+    background-color: #6c757d;
+  }
+</style>

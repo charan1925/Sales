@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sales UI</title>
+
+</head>
+<body>
+  <h1>Sales UI</h1>
+  <form>
+    <label for="id">ID:</label>
+    <input type="text" name="id" id="id" value="">
+    <br>
+    <button type="button" id="ss">Search</button>
+  </form>
+  <br>
+  <h2>Sales Data</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Sales Date & Time</th>
+        <th>Items</th>
+        <th>Store Location</th>
+        <th>Purchased Method</th>
+      </tr>
+    </thead>
+    <tbody id="salesData">
+      <tr>
+        <td colspan="5">No sales data available.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    let button = document.querySelector('#ss');
+    let salesData = document.querySelector('#salesData');
+
+    button.onclick = function () {
+      let id = document.querySelector('#id').value;
+
+      let url = `http://localhost:3000/api/sales?_id="${id}"`;
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          let itemNames = data.map(sale => sale.items.map(item => item.name));
+          if (data.length > 0) {
+            let html = '';
+            data.forEach((sale, index) => {
+              html += `
+                <tr>
+                <td>${sale._id}</td>
+                  <td>${sale.saleDate}</td>
+                  <td>${itemNames[index].join(', ')}</td>
+                  <td>${sale.storeLocation}</td>
+                  <td>${sale.purchaseMethod}</td>
+                </tr>
+              `;
+            });
+            salesData.innerHTML = html;
+            salesData.style.display = 'table-row-group';
+          } else {
+            salesData.innerHTML = `
+              <tr>
+                <td colspan="5">No sales data available.</td>
+              </tr>
+            `;
+            salesData.style.display = 'table-row-group';
+          }
+        })
+        .catch(error => console.error(error));
+    };
+  </script>
+</body>
+</html>

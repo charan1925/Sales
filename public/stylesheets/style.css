@@ -1,0 +1,81 @@
+--------------------------------------------------
+/* BASIC SETUP */
+/* -------------------------------------------------- */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: 'Arial', 'Helvetica', 'sans-serif';
+    font-size: 15px;
+    font-weight: 300;
+}
+
+body {
+    font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+    text-align: center;
+}
+
+.menu a{
+    color: black;
+    padding-left: 80px;
+    padding-right: 80px;
+    text-decoration: solid;
+    font-size: xx-large;
+    border: 2px solid;
+
+}
+
+.center-content {
+    display: flex;
+    margin: auto;
+    align-items:center;
+    justify-content:center;
+    background-color: rgb(233, 238, 196);
+    
+}
+
+
+.form-center {
+    margin-top: 35vh;
+    margin-bottom: 40vh;
+}
+
+.main-content {
+    height: 80.8vh;
+    color :black ;
+} 
+
+.footer {
+    height: 70px;
+    background-color: rgb(102, 238, 184);
+    font-size: x-large;
+}
+
+.header{
+    background-color: rgb(102, 238, 184);
+    height: 80px;
+    color:black;
+    padding: 20px;
+    font-size: xx-large;
+}
+/* .table-wrapper {
+    margin: 70px 70px 70px;
+  } */
+  
+/* .fl-table {
+    
+    font-size: 12px;
+    font-weight: normal;
+    border:black solid 3px;
+    background-color: rgb(248, 246, 246);
+  } */
+
+ #out{
+    padding-left: 5%;
+    border: 2px solid black;
+    font-weight: bold;
+}

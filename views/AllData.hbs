@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sales UI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgb(120, 206, 252);
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    input[type="number"],
+    input[type="text"] {
+      padding: 0.5rem;
+      border-radius: 0.3rem;
+      border: none;
+      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+      width: 100%;
+      max-width: 20rem;
+      margin-bottom: 1rem;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 0.3rem;
+      border: none;
+      box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+      font-size: 1rem;
+      background-color: #fdfb63;
+      color: #111010;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #3e8e41;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 0.5rem;
+      border: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #0cbaf9;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    header {
+      background-color: #0cbaf9;
+    }
+    .container {
+      border: solid black 2px;
+      padding: 10px;
+      width: 30%;
+      background-color: #0cbaf9;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Sales Data</h1>
+  </header>
+
+  <form class="container">
+    <h5>Fill the fields to get sales data:</h5>
+    <label for="page">Page:</label>
+    <input type="number" name="page" id="page" value="1" required>
+    <br>
+    <label for="perPage">Per Page:</label>
+    <input type="number" name="perPage" id="perPage" value="10" required>
+    <br>
+    <label for="storeLocation">Store Location:</label>
+    <input type="text" name="storeLocation" id="storeLocation" value="" required>
+    <br>
+    <button type="button" id="submit">Search</button>
+  </form>
+  <br>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Sales Date & Time</th>
+        <th>Items</th>
+        <th>Store Location</th>
+        <th>Purchased Method</th>
+      </tr>
+    </thead>
+    <tbody id="salesData">
+      <tr>
+        <td colspan="5">No sales data available.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+    const button = document.querySelector('#submit');
+    const salesData = document.querySelector('#salesData');
+
+    button.onclick = function () {
+      const page = document.querySelector('#page').value;
+      const perPage = document.querySelector('#perPage').value;
+      const storeLocation = document.querySelector('#storeLocation').value;
+
+      fetch(`http://localhost:3000/api/get/sales?page=${page}&perPage=${perPage}&storeLocation=${storeLocation}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+          let itemNames = data.map(sale => sale.items.map(item => item.name));
+          if (data.length > 0) {
+            let html = '';
+            data.forEach((sale, index) => {
+              html += `
+                <tr>
+                  <td>${sale._id}</td>
+                  <td>${sale.saleDate}</td>
+                  <td>${itemNames[index].join(', ')}</td>
+                  <td>${sale.storeLocation}</td>
+                  <td>${sale.purchaseMethod}</td>
+                </tr>
+              `;
+            });
+            salesData.innerHTML = html;
+            salesData.style.display = 'table-row-group';
+          } else {
+            salesData.innerHTML = `
+              <tr>
+                <td colspan="5">No sales data available.</td>
+              </tr>
+            `;
+            salesData.style.display = 'table-row-group';
+          }
+        })
+        .catch(error => console.error(error));
+    };
+  </script>
+</body>
+
+</html>
